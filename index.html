@@ -9,19 +9,22 @@
 <body>
   <div class="theme-toggle">
     <!-- Dark mode toggle -->
-<label class="switch">
-  <input type="checkbox" id="darkModeToggle" />
-  <span class="slider"></span>
-</label>
+    <label class="switch">
+      <input type="checkbox" id="darkModeToggle" />
+      <span class="slider"></span>
+    </label>
   </div>
 
   <div class="container">
     <h1>My To-Do List 📝</h1>
 
-    <div id="imagePreviewContainer">
-      <img id="imagePreview" src="" alt="Preview" />
-    </div>
+    <!-- Image Preview Section -->
+    <div id="imagePreviewContainer" style="display: none;">
+      <img id="imagePreview" src="" alt="Task Image Preview" />
+  </div>
+  
 
+    <!-- Input Section for Task and Image -->
     <div class="input-section">
       <input type="text" id="taskInput" placeholder="Add a new task..." />
       <label for="imageInput">Choose Image</label>
@@ -29,6 +32,7 @@
       <button onclick="addTask()">Add</button>
     </div>
 
+    <!-- Task List -->
     <ul id="taskList"></ul>
   </div>
 
