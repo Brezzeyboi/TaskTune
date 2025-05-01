@@ -7,14 +7,13 @@ function previewImage() {
         const imagePreview = document.getElementById("imagePreview");
         const imagePreviewContainer = document.getElementById("imagePreviewContainer");
 
-        // Make sure the image is loaded and set it as src
         imagePreview.src = e.target.result;
-        imagePreview.alt = "Task Image Preview"; // Make sure alt text is set as well
-        imagePreviewContainer.style.display = "block"; // Show image preview container
+        imagePreview.alt = "Task Image Preview";
+        imagePreviewContainer.style.display = "block";
     };
 
     if (file) {
-        reader.readAsDataURL(file); // This reads the file as a base64 string
+        reader.readAsDataURL(file);
     }
 }
 
@@ -30,31 +29,32 @@ function addTask() {
 
     const task = {
         text: taskText,
-        image: imageSrc && imagePreviewContainer.style.display !== "none" ? imageSrc : ""
+        image: imageSrc && imagePreviewContainer.style.display !== "none" ? imageSrc : "",
+        done: false
     };
 
-    // Get tasks from localStorage or initialize as an empty array
     let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
     tasks.push(task);
     localStorage.setItem("tasks", JSON.stringify(tasks));
 
     renderTasks();
 
-    // Clear inputs and image preview
     input.value = "";
     imagePreview.src = "";
     imagePreview.alt = "";
-    imagePreviewContainer.style.display = "none"; // Hide preview container
+    imagePreviewContainer.style.display = "none";
 }
 
 // Render tasks from localStorage
 function renderTasks() {
     const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
     const taskList = document.getElementById("taskList");
-    taskList.innerHTML = ""; // Clear existing tasks
+    taskList.innerHTML = "";
 
     tasks.forEach((task, index) => {
         const li = document.createElement("li");
+
+        if (task.done) li.classList.add("done");
 
         const taskTextElement = document.createElement("span");
         taskTextElement.textContent = task.text;
@@ -68,10 +68,11 @@ function renderTasks() {
             li.appendChild(img);
         }
 
-        // Toggle task completion
-        li.onclick = () => li.classList.toggle("done");
+        li.onclick = () => {
+            li.classList.toggle("done");
+            toggleTaskDone(index);
+        };
 
-        // Remove button for task
         const removeBtn = document.createElement("button");
         removeBtn.textContent = "❌";
         removeBtn.classList.add("remove-btn");
@@ -83,6 +84,13 @@ function renderTasks() {
 
         taskList.appendChild(li);
     });
+}
+
+// Toggle task done state and update storage
+function toggleTaskDone(index) {
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    tasks[index].done = !tasks[index].done;
+    localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
 // Remove a task from localStorage and re-render
@@ -111,10 +119,7 @@ function detectSystemTheme() {
     }
 }
 
-// Call the function to detect and apply the theme on page load
 detectSystemTheme();
-
-// Listen for changes in system theme preference
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', detectSystemTheme);
 
 // Initial rendering of tasks on page load
