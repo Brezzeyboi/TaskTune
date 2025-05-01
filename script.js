@@ -25,13 +25,11 @@ function addTask() {
 
     const li = document.createElement("li");
 
-    // Task text
     const taskTextElement = document.createElement("span");
     taskTextElement.textContent = taskText;
     taskTextElement.classList.add("task-text");
     li.appendChild(taskTextElement);
 
-    // Image (if any)
     if (imageSrc && imagePreviewContainer.style.display !== "none") {
         const img = document.createElement("img");
         img.src = imageSrc;
@@ -39,23 +37,26 @@ function addTask() {
         li.appendChild(img);
     }
 
-    // Toggle done on click
     li.onclick = () => li.classList.toggle("done");
 
-    // Remove button
     const removeBtn = document.createElement("button");
     removeBtn.textContent = "❌";
     removeBtn.classList.add("remove-btn");
     removeBtn.onclick = (e) => {
-        e.stopPropagation(); // prevent triggering li toggle
+        e.stopPropagation();
         li.remove();
     };
     li.appendChild(removeBtn);
 
     document.getElementById("taskList").appendChild(li);
 
-    // Reset inputs
     input.value = "";
     imagePreview.src = "";
     imagePreviewContainer.style.display = "none";
 }
+
+// Dark mode toggle
+document.getElementById("darkModeToggle").addEventListener("change", function () {
+    document.body.classList.toggle("dark", this.checked);
+  });
+  
