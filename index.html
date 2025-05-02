@@ -3,47 +3,51 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>To-Do List</title>
+  <title>Task Tune</title>
   <link rel="stylesheet" href="style.css"/>
-  <link rel=icon href="png.png" type="image/png"/>
+  <link rel="icon" href="png.png" type="image/png"/>
 </head>
 <body>
-  <div class="theme-toggle">
-    <!-- Dark mode toggle -->
-    <label class="switch">
-      <input type="checkbox" id="darkModeToggle" />
-      <span class="slider"></span>
-    </label>
-  </div>
-
-  <div class="container">
-    <h1>My To-Do List 📝</h1>
-
-    <!-- Image Preview Section -->
-    <div id="imagePreviewContainer" style="display: none;">
-      <img id="imagePreview" src="" alt="Task Image Preview" />
-  </div>
-  
-
-    <!-- Input Section for Task and Image -->
-    <div class="input-section">
-      <input type="text" id="taskInput" placeholder="Add a new task..." />
-      <label for="imageInput">Choose Image</label>
-      <input type="file" id="imageInput" onchange="previewImage()" accept="image/*" />
-      <button onclick="addTask()">Add</button>
+  <main class="page-content">
+    <div class="theme-toggle">
+      <!-- Dark mode toggle -->
+      <label class="switch">
+        <input type="checkbox" id="darkModeToggle" />
+        <span class="slider"></span>
+      </label>
     </div>
 
-    <!-- Task List -->
-    <ul id="taskList"></ul>
-  </div>
+    <div class="container">
+      <h1>My To-Do List 📝</h1>
 
-  <script src="script.js"></script>
+      <!-- Image Preview Section -->
+      <div id="imagePreviewContainer" style="display: none;">
+        <img id="imagePreview" src="" alt="Task Image Preview" />
+      </div>
+
+      <!-- Input Section for Task and Image -->
+      <div class="input-section">
+        <input type="text" id="taskInput" placeholder="Add a new task..." />
+        <label for="imageInput">Choose Image</label>
+        <input type="file" id="imageInput" onchange="previewImage()" accept="image/*" />
+        <button onclick="addTask()">Add</button>
+      </div>
+
+      <!-- Task List -->
+      <ul id="taskList"></ul>
+    </div>
+  </main>
+
   <footer class="watermark">
     <p>
       <a href="https://github.com/Brezzeyboi" target="_blank">Brezzeyboi</a> • with a hand of 
       <img src="https://chat.openai.com/favicon.ico" alt="ChatGPT" class="icon">
       in 
-      <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="JavaScript" class="icon"> ❤️
+      <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="JavaScript" class="icon"> 
+      ❤️
     </p>
-  </footer> 
+  </footer>
+
+  <script src="script.js"></script>
+</body>
 </html>

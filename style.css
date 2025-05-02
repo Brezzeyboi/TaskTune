@@ -4,29 +4,31 @@
     --box: white;
     --btn: #4caf50;
     --li: #eee;
-}
-
-body.dark {
+  }
+  
+  body.dark {
     --bg: #1e1e1e;
     --text: #fff;
     --box: #2a2a2a;
     --li: #333;
-}
-
-body {
+  }
+  
+  body {
     font-family: 'Segoe UI', sans-serif;
     background-color: var(--bg);
     color: var(--text);
     margin: 0;
     padding: 0;
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: center;
     min-height: 100vh;
     transition: background-color 0.3s, color 0.3s;
-}
-
-.container {
+  }
+  
+  
+  
+  .container {
     margin-top: 60px;
     background: var(--box);
     padding: 20px;
@@ -36,30 +38,34 @@ body {
     max-width: 400px;
     text-align: center;
     transition: background 0.3s, color 0.3s;
-}
-
-h1 {
+    flex-shrink: 0;          /* Prevent shrinking */
+    flex-grow: 0;            /* Don't force vertical stretch */
+    height: auto;            /* Let height be based on content */
+  }
+  
+   
+  h1 {
     margin-bottom: 20px;
     font-size: 24px;
-}
-
-/* Dark mode switch */
-.switch {
+  }
+  
+  /* Dark mode switch */
+  .switch {
     position: absolute;
     top: 20px;
     right: 20px;
     display: inline-block;
     width: 60px;
     height: 30px;
-}
-
-.switch input {
+  }
+  
+  .switch input {
     opacity: 0;
     width: 0;
     height: 0;
-}
-
-.slider {
+  }
+  
+  .slider {
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -69,9 +75,9 @@ h1 {
     background-color: #ccc;
     transition: 0.4s;
     border-radius: 30px;
-}
-
-.slider:before {
+  }
+  
+  .slider:before {
     position: absolute;
     content: "🌞";
     height: 24px;
@@ -84,27 +90,27 @@ h1 {
     background-color: white;
     border-radius: 50%;
     transition: 0.4s;
-}
-
-input:checked + .slider {
+  }
+  
+  input:checked + .slider {
     background-color: var(--btn);
-}
-
-input:checked + .slider:before {
+  }
+  
+  input:checked + .slider:before {
     transform: translateX(30px);
     content: "🌙";
-}
-
-/* Input section */
-.input-section {
+  }
+  
+  /* Input section */
+  .input-section {
     display: flex;
     gap: 10px;
     align-items: center;
     margin-bottom: 20px;
     flex-wrap: wrap;
-}
-
-input[type="text"] {
+  }
+  
+  input[type="text"] {
     padding: 10px 14px;
     font-size: 14px;
     flex: 1;
@@ -113,26 +119,26 @@ input[type="text"] {
     outline: none;
     background-color: var(--li);
     color: var(--text);
-}
-
-input[type="file"] {
+  }
+  
+  input[type="file"] {
     display: none;
-}
-
-label[for="imageInput"] {
+  }
+  
+  label[for="imageInput"] {
     background-color: var(--btn);
     color: white;
     padding: 8px 12px;
     border-radius: 10px;
     cursor: pointer;
     font-size: 14px;
-}
-
-label[for="imageInput"]:hover {
+  }
+  
+  label[for="imageInput"]:hover {
     background-color: #45a049;
-}
-
-button {
+  }
+  
+  button {
     padding: 8px 12px;
     background-color: var(--btn);
     color: white;
@@ -140,19 +146,19 @@ button {
     cursor: pointer;
     border-radius: 10px;
     font-size: 14px;
-}
-
-button:hover {
+  }
+  
+  button:hover {
     background-color: #45a049;
-}
-
-/* Tasks */
-ul {
+  }
+  
+  /* Tasks */
+  ul {
     list-style: none;
     padding: 0;
-}
-
-li {
+  }
+  
+  li {
     background-color: var(--li);
     border-radius: 10px;
     margin-bottom: 10px;
@@ -163,28 +169,28 @@ li {
     position: relative;
     transition: background 0.3s;
     align-items: center; /* Centers content (text and image) */
-}
-
-.task-text {
+  }
+  
+  .task-text {
     font-size: 16px;
     word-wrap: break-word;
-}
-
-/* Checkmark animation */
-.done .task-text::before {
+  }
+  
+  /* Checkmark animation */
+  .done .task-text::before {
     content: "✔ ";
     color: var(--btn);
     animation: pop 0.3s ease;
-}
-
-@keyframes pop {
+  }
+  
+  @keyframes pop {
     0% { transform: scale(0.2); opacity: 0; }
     50% { transform: scale(1.2); opacity: 1; }
     100% { transform: scale(1); }
-}
-
-/* Image in task */
-img.task-image {
+  }
+  
+  /* Image in task */
+  img.task-image {
     height: 200%;
     max-height: 200;
     width: 200%; /* Ensures image takes up full available width */
@@ -193,10 +199,10 @@ img.task-image {
     object-fit: contain; /* Prevents image from getting cut off */
     border-radius: 10px;
     margin-bottom: 10px; /* Adds spacing between the image and text */
-}
-
-/* Remove button */
-button.remove-btn {
+  }
+  
+  /* Remove button */
+  button.remove-btn {
     position: absolute;
     top: 50%;
     right: 10px;
@@ -208,57 +214,49 @@ button.remove-btn {
     padding: 6px 10px;
     font-size: 14px;
     cursor: pointer;
-}
-
-
-button.remove-btn:hover {
+  }
+  
+  button.remove-btn:hover {
     background-color: #338d37;
-}
-
-#imagePreviewContainer {
-    display: none; /* Hide it initially */
-    margin-bottom: 15px; /* Space between input and list */
-    text-align: center; /* Center the image */
-}
-
-#imagePreview {
-    max-width: 100%; /* Image width won't exceed its container */
-    max-height: 200px; /* Set a max height to keep it from getting too large */
-    object-fit: cover; /* Keep the aspect ratio intact */
-    border-radius: 10px; /* Rounded corners for the image */
-    display: block; /* Ensures it's displayed as a block element */
-    margin: 0 auto; /* Centers the image */
-}
-
-.watermark {
+  }
+  
+  /* Watermark (Paragraph instead of Footer) */
+  .watermark {
     text-align: center;
     font-size: 0.85rem;
     color: var(--text-muted, #666);
     padding: 1rem 0;
     opacity: 0.8;
-    position: fixed;
-    bottom: 0;
     width: 100%;
-    background: transparent;
-    z-index: 999;
+    margin-top: 40px;
+    line-height: 1.6;
   }
   
   .watermark .icon {
-    width: 16px;
     height: 16px;
-    vertical-align: middle;
+    width: 16px;
+    vertical-align: text-bottom;
     margin: 0 4px;
     border-radius: 3px;
+    object-fit: contain;
   }
-
+  
   .watermark a {
-    color: #8ca0c4; /* or whatever soft color you want */
+    color: #8ca0c4;
     font-weight: 500;
     text-decoration: none;
   }
-
+  
   .watermark a:hover {
     color: #aabbdd;
     text-decoration: underline;
+  }
+ 
+  .page-content {
+    flex: 1; /* Fills vertical space between header and footer */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
   }
   
