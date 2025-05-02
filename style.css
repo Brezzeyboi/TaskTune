@@ -229,3 +229,36 @@ button.remove-btn:hover {
     display: block; /* Ensures it's displayed as a block element */
     margin: 0 auto; /* Centers the image */
 }
+
+.watermark {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-muted, #666);
+    padding: 1rem 0;
+    opacity: 0.8;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: transparent;
+    z-index: 999;
+  }
+  
+  .watermark .icon {
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    margin: 0 4px;
+    border-radius: 3px;
+  }
+
+  .watermark a {
+    color: #8ca0c4; /* or whatever soft color you want */
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .watermark a:hover {
+    color: #aabbdd;
+    text-decoration: underline;
+  }
+  
