@@ -2,11 +2,11 @@
 <p align="center">A sleek, animated, dark-themed To-Do list app made for smooth productivity and aesthetic vibes.</p>
 
 <p align="center">
-  <img src="https://to-do-list-web-p84oe711d-brezzeybois-projects.vercel.app/favicon.ico" width="64" alt="TaskTune Icon" />
+  <img src="https://tasktune.vercel.app/png.png" width="64" alt="TaskTune Icon" />
 </p>
 
 <p align="center">
-  <a href="https://to-do-list-web-p84oe711d-brezzeybois-projects.vercel.app/" target="_blank">
+  <a href="https://tasktune.vercel.app" target="_blank">
     🔗 Live Demo
   </a>
   &nbsp;|&nbsp;
