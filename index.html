@@ -1,55 +1,96 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Task Tune</title>
-  <link rel="stylesheet" href="style.css"/>
-  <link rel="icon" href="png.png" type="image/png"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#11121e" />
+  <meta name="description" content="TaskTune — your focused, lightweight productivity space." />
+  <title>TaskTune — Make room for progress</title>
+  <link rel="icon" href="png.png" type="image/png" />
+  <link rel="stylesheet" href="style.css" />
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('tasktune:theme')||'dark'}catch(e){}</script>
+  <script src="script.js" defer></script>
 </head>
 <body>
-  <main class="page-content">
-    <div class="theme-toggle">
-      <!-- Dark mode toggle -->
-      <label class="switch">
-        <input type="checkbox" id="darkModeToggle" />
-        <span class="slider"></span>
-      </label>
-    </div>
-
-    <div class="container">
-      <h1>My To-Do List 📝</h1>
-
-      <!-- Image Preview Section -->
-      <div id="imagePreviewContainer" style="display: none;">
-        <img id="imagePreview" src="" alt="Task Image Preview" />
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Sidebar">
+      <a class="brand" href="#all" aria-label="TaskTune home">
+        <span class="brand-logo" aria-hidden="true">✓</span>
+        <span class="brand-name">tasktune<span class="brand-dot">.</span></span>
+      </a>
+      <div class="side-section-label">WORKSPACE</div>
+      <nav class="side-nav" aria-label="Task views">
+        <button class="nav-link active" type="button" data-view="all"><span class="nav-icon" aria-hidden="true">▦</span> All tasks <span id="navAllCount" class="nav-count">0</span></button>
+        <button class="nav-link" type="button" data-view="today"><span class="nav-icon" aria-hidden="true">◷</span> Today</button>
+        <button class="nav-link" type="button" data-view="upcoming"><span class="nav-icon" aria-hidden="true">▤</span> Upcoming</button>
+        <button class="nav-link" type="button" data-view="completed"><span class="nav-icon" aria-hidden="true">✓</span> Completed</button>
+      </nav>
+      <div class="side-section-label categories-label">CATEGORIES</div>
+      <nav class="side-nav" aria-label="Task categories">
+        <button class="nav-link category-link" type="button" data-category="Work"><span class="category-dot work"></span> Work</button>
+        <button class="nav-link category-link" type="button" data-category="Personal"><span class="category-dot personal"></span> Personal</button>
+        <button class="nav-link category-link" type="button" data-category="Study"><span class="category-dot study"></span> Study</button>
+        <button class="nav-link category-link" type="button" data-category="Other"><span class="category-dot other"></span> Other</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="shortcuts"><span class="shortcuts-title">QUICK TIP</span><span><kbd>N</kbd> New task &nbsp; <kbd>/</kbd> Search</span></div>
+        <div class="side-footer">Built with focus. <span aria-hidden="true">✦</span></div>
       </div>
+    </aside>
 
-      <!-- Input Section for Task and Image -->
-      <div class="input-section">
-        <input type="text" id="taskInput" placeholder="Add a new task..." />
-        <label for="imageInput">Choose Image</label>
-        <input type="file" id="imageInput" onchange="previewImage()" accept="image/*" />
-        <button onclick="addTask()">Add</button>
+    <main class="main-content">
+      <header class="topbar">
+        <div class="breadcrumb">Workspace <span aria-hidden="true">/</span> <strong id="breadcrumbView">All tasks</strong></div>
+        <div class="header-actions">
+          <button type="button" class="icon-button" id="themeToggle" aria-label="Switch theme" title="Switch theme">☼</button>
+          <button type="button" class="icon-button" id="exportButton" aria-label="Export tasks" title="Export tasks to JSON">⇩</button>
+          <button type="button" class="icon-button" id="importButton" aria-label="Import tasks" title="Import tasks from JSON">⇧</button>
+          <input type="file" id="importInput" accept="application/json,.json" hidden />
+          <button type="button" class="button button-primary top-create" id="newTaskButton"><span aria-hidden="true">＋</span> New task</button>
+        </div>
+      </header>
+
+      <div class="content-wrap">
+        <div class="page-heading">
+          <div><span class="eyebrow" id="greeting">YOUR PRODUCTIVITY HUB</span><h1 id="pageTitle">Your space to get things done<span class="heading-period">.</span></h1><p id="pageSubtitle">A clear mind starts with a clear plan.</p></div>
+          <span class="today-date" id="todayLabel"></span>
+        </div>
+
+        <section class="overview" aria-label="Productivity overview">
+          <div class="progress-card">
+            <div class="progress-copy"><span class="card-kicker">YOUR PROGRESS</span><h2>One task at a time.</h2><p id="progressMessage">Add your first task to get moving.</p><div class="progress-ratio"><strong id="doneCount">0</strong><span>of <span id="totalCount">0</span> tasks done</span></div></div>
+            <div class="progress-ring" id="progressRing" role="img" aria-label="0 percent of tasks completed"><span id="progressPercent">0%</span></div>
+            <span class="progress-sparkle" aria-hidden="true">✳</span>
+          </div>
+          <div class="stat-card"><span class="stat-icon purple" aria-hidden="true">▤</span><span class="stat-label">Remaining</span><strong id="remainingCount">0</strong><span class="stat-foot">Tasks to tackle</span></div>
+          <div class="stat-card"><span class="stat-icon amber" aria-hidden="true">◷</span><span class="stat-label">Due today</span><strong id="dueTodayCount">0</strong><span class="stat-foot">Stay on track</span></div>
+          <div class="stat-card"><span class="stat-icon coral" aria-hidden="true">!</span><span class="stat-label">Overdue</span><strong id="overdueCount">0</strong><span class="stat-foot">Needs your attention</span></div>
+        </section>
+
+        <section class="task-section" aria-label="Tasks">
+          <div class="section-heading"><div><span class="eyebrow">STAY ON TOP OF IT</span><h2 id="sectionTitle">All tasks <span class="section-count" id="sectionCount">0</span></h2></div><button type="button" class="text-button" id="clearCompletedButton">Clear completed</button></div>
+          <form id="quickAddForm" class="quick-add"><span class="quick-plus" aria-hidden="true">＋</span><label class="sr-only" for="quickTaskInput">New task</label><input id="quickTaskInput" type="text" placeholder="What needs to get done?" autocomplete="off" maxlength="180" required /><button type="button" class="options-button" id="advancedAddButton" title="Add with details">More options</button><button type="submit" class="button button-primary quick-submit">Add task <span aria-hidden="true">↗</span></button></form>
+          <div class="task-toolbar"><div class="filter-tabs" role="group" aria-label="Task status"><button type="button" class="filter-tab active" data-status="all">All</button><button type="button" class="filter-tab" data-status="active">Active</button><button type="button" class="filter-tab" data-status="completed">Completed</button></div><div class="toolbar-right"><label class="search-field"><span aria-hidden="true">⌕</span><span class="sr-only">Search tasks</span><input id="searchInput" type="search" placeholder="Search tasks" /></label><label class="sort-select"><span class="sr-only">Sort tasks</span><select id="sortSelect"><option value="newest">Newest first</option><option value="oldest">Oldest first</option><option value="due">Due date</option><option value="priority">Priority</option></select></label></div></div>
+          <ul id="taskList" class="task-list" aria-label="Task list"></ul>
+          <div class="empty-state" id="emptyState" hidden><div class="empty-illustration" aria-hidden="true">✦</div><h3 id="emptyTitle">Your canvas is clear</h3><p id="emptyDescription">Add a task and turn ideas into progress.</p><button class="button button-primary" type="button" id="emptyAddButton">Create a task</button></div>
+        </section>
+        <footer class="app-footer"><span>TaskTune 2.0 · Built for your everyday wins</span><a href="https://github.com/Brezzeyboi/TaskTune" target="_blank" rel="noopener noreferrer">Made by Brezzeyboi ↗</a></footer>
       </div>
+    </main>
+  </div>
 
-      <!-- Task List -->
-      <ul id="taskList"></ul>
-    </div>
-  </main>
-
-  <footer class="watermark">
-    <p>
-      <a href="https://github.com/Brezzeyboi" target="_blank">Brezzeyboi</a> • with a hand of 
-      <img src="https://chat.openai.com/favicon.ico" alt="ChatGPT" class="icon">
-      in 
-      <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="JavaScript" class="icon"> 
-      ❤️
-    </p>
-  </footer>
-
-  <script src="script.js"></script>
+  <dialog id="taskDialog" class="task-dialog" aria-labelledby="dialogTitle">
+    <form id="taskForm" class="dialog-form">
+      <div class="dialog-heading"><div><span class="eyebrow">MAKE IT HAPPEN</span><h2 id="dialogTitle">Create a task</h2></div><button type="button" class="icon-button dialog-close" id="closeDialogButton" aria-label="Close dialog">✕</button></div>
+      <label class="field"><span>Task name <span class="required">*</span></span><input id="dialogTaskTitle" type="text" maxlength="180" placeholder="e.g. Finish the presentation" required /></label>
+      <label class="field"><span>Notes <span class="optional">optional</span></span><textarea id="dialogTaskNotes" rows="3" maxlength="1500" placeholder="Add any extra details..."></textarea></label>
+      <div class="field-grid"><label class="field"><span>Priority</span><select id="dialogTaskPriority"><option value="medium">Medium</option><option value="low">Low</option><option value="high">High</option></select></label><label class="field"><span>Category</span><select id="dialogTaskCategory"><option value="Personal">Personal</option><option value="Work">Work</option><option value="Study">Study</option><option value="Other">Other</option></select></label></div>
+      <label class="field"><span>Due date <span class="optional">optional</span></span><input id="dialogTaskDue" type="date" /></label>
+      <div class="field"><span>Attachment <span class="optional">optional, image only</span></span><div class="attachment-control"><label for="dialogTaskImage" class="button button-outline upload-label">Choose image</label><input type="file" id="dialogTaskImage" accept="image/png,image/jpeg,image/webp,image/gif" hidden /><span id="imageFileName" class="file-name">No image selected</span></div><div id="attachmentPreview" class="attachment-preview" hidden><img id="attachmentImage" alt="Task attachment preview" /><button type="button" id="removeAttachmentButton" class="text-button">Remove image</button></div></div>
+      <p id="formError" class="form-error" role="alert" hidden></p>
+      <div class="dialog-actions"><button type="button" class="button button-ghost" id="cancelDialogButton">Cancel</button><button type="submit" class="button button-primary" id="saveTaskButton">Create task</button></div>
+    </form>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden><span id="toastText"></span><button id="undoButton" type="button" hidden>Undo</button><button id="dismissToastButton" type="button" aria-label="Dismiss notification">✕</button></div>
 </body>
 </html>
-<script async data-explicit-opt-in="true" data-cookie-opt-in="true" data-deployment-id="dpl_Axmry6sB6zCnH3CfEg6zmmwqbiVP" src="https://vercel.live/_next-live/feedback/feedback.js"></script>
